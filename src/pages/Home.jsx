@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import cancerCell from "../assets/images/cancer-cell.jpg";
+import Cards from "../components/Cards";
+import "../styles/Home.css";
+
+const smoothTransition = {
+  duration: 1.2,
+  ease: "easeInOut", // Smoother easing curve
+};
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -11,88 +18,68 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#0a0f1c] text-white text-3xl font-bold">
+      <div className="loading-screen">
         Loading...
       </div>
     );
   }
 
   return (
-    <div className="text-white bg-[#0a0f1c] min-h-screen px-6 md:px-10 pt-4">
+    <div className="home-container">
       {/* Hero Section with Animation */}
-      <section className="flex flex-col md:flex-row items-center justify-between py-20 text-center md:text-left">
+      <section className="hero-section">
         <motion.div 
-          className="w-full md:w-1/2 flex flex-col gap-6"
+          className="hero-text"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
+          transition={smoothTransition}
         >
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-200">
-            Welcome to CLUTCH.AI
-          </h1>
+          <h1 className="hero-heading">Welcome to CLUTCH.AI</h1>
           <motion.p 
-            className="text-xl md:text-2xl text-gray-400"
+            className="hero-subtext"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
+            transition={{ delay: 0.3, ...smoothTransition }}
           >
             Spot. Detect. Protect. <br /> AI for Early Cancer Detection.
           </motion.p>
           <motion.p 
-            className="text-lg md:text-xl text-gray-400"
+            className="hero-description"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 1 }}
+            transition={{ delay: 0.5, ...smoothTransition }}
           >
             Your trusted platform for AI-powered cancer diagnosis and research.
           </motion.p>
         </motion.div>
 
         <motion.div 
-          className="w-full md:w-1/2 flex justify-center mt-10 md:mt-0"
+          className="hero-image-container"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
+          transition={smoothTransition}
         >
-          <img
-            src={cancerCell}
-            alt="Cancer Cell"
-            className="max-w-sm md:max-w-2xl w-full rounded-lg shadow-lg border border-gray-700 object-cover drop-shadow-lg"
-            style={{ filter: "brightness(1.1) contrast(1.1)" }}
-          />
+          <img src={cancerCell} alt="Cancer Cell" className="hero-image" />
         </motion.div>
       </section>
 
       {/* Mission Section with Animated Cards */}
-      <section className="py-20 text-center px-4 md:px-0">
+      <section className="mission-section">
         <motion.div 
-          className="w-full md:w-3/4 mx-auto flex flex-col gap-6"
+          className="mission-text"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
+          transition={smoothTransition}
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-200">Our Mission</h2>
-          <p className="text-lg md:text-xl text-gray-400">
+          <h2 className="mission-heading">Our Mission</h2>
+          <p className="mission-description">
             We aim to revolutionize cancer diagnosis and research through the power of AI.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-10">
-          {["Early Detection", "Accurate Diagnosis", "Research & Innovation", "Pathology", "Biopsy", "Radiology"].map((title, index) => (
-            <motion.div 
-              key={index}
-              className="bg-[#1a2332] p-6 rounded-lg shadow-lg border border-gray-700"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 * index, duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-2xl font-bold text-gray-200 mb-4">{title}</h3>
-              <p className="text-gray-400">AI-driven insights to enhance {title.toLowerCase()} and improve patient outcomes.</p>
-            </motion.div>
-          ))}
-        </div>
+        {/* Cards Component */}
+        <Cards />
       </section>
     </div>
   );
